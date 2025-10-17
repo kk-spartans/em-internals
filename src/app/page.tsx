@@ -27,15 +27,15 @@ export default function Home() {
       <section className="slide slide-1">
         <div className="slide-1-left">
           <motion.div className="image-wrap" {...getZoomInAnimation()}>
-            <Image
-              src="/img1.jpg"
-              alt="Adelaide Superbasin"
-              fill
-              className="slide-image next-image"
-            />
-            <div className="image-fade horizontal" aria-hidden />
-            <div className="image-fade vertical" aria-hidden />
-          </motion.div>
+  <img
+    src="./img1.jpg"       // relative path for GitHub Pages
+    alt="Adelaide Superbasin"
+    className="slide-image next-image"
+    style={{ objectFit: "cover", width: "100%", height: "100%" }} // mimics Next.js fill
+  />
+  <div className="image-fade horizontal" aria-hidden />
+  <div className="image-fade vertical" aria-hidden />
+</motion.div>
         </div>
         <aside className="slide-1-right">
           <motion.h1 {...getTitleAnimation()}>
