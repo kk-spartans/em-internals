@@ -1,9 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import { getTitleAnimation, getZoomInAnimation } from "./animations";
+import RiftValleyAnimation from "./RiftValleyAnimation";
 
 export default function Home() {
   const [leftDetail, setLeftDetail] = useState<string | null>(null);
@@ -73,7 +74,6 @@ export default function Home() {
               </button>
             </div>
             <div ref={mapRef} className="map-embed" id="map-embed">
-              {/* Google Maps embed centered on Adelaide Superbasin coords  -33.6833,138.7333 */}
               <iframe
                 title="Adelaide Superbasin map"
                 src={`https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1262432.821782527!2d138.7333!3d-33.6833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sau!4v0000000000000`}
@@ -91,15 +91,7 @@ export default function Home() {
       {/* Slide 2 */}
       <section className="slide slide-2">
         <motion.h2 {...getTitleAnimation()}>What is a Rift Valley?</motion.h2>
-        <motion.div
-          className="animation-placeholder"
-          role="img"
-          aria-label="Animated SVG placeholder"
-          {...getZoomInAnimation(0.2)}
-        >
-          Interactive animation on what a rift valley is, not a gif, an actual
-          svg animation
-        </motion.div>
+        <RiftValleyAnimation />
         <motion.div className="preface" {...getTitleAnimation(0.4)}>
           <p>
             A rift valley is a lowland between highlands produced by the action
@@ -118,7 +110,7 @@ export default function Home() {
             <div className="top-tiles">
               <motion.button
                 type="button"
-                className="summary"
+                className="summary peach"
                 onClick={() => setLeftDetail("copper")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -127,7 +119,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 type="button"
-                className="summary"
+                className="summary blue"
                 onClick={() => setLeftDetail("rnd")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -136,7 +128,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 type="button"
-                className="summary"
+                className="summary green"
                 onClick={() => setLeftDetail("jobs")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -146,38 +138,98 @@ export default function Home() {
             </div>
             <div className="bottom-tile">
               {leftDetail === null && (
-                <p className="muted">
-                  Click a tile above to see more. (click enlarge button to send
-                  down)
-                </p>
+                <p className="muted">Click a tile above to see more.</p>
               )}
+
               {leftDetail === "copper" && (
                 <div>
-                  <h4>Copper</h4>
+                  <h4>Copper</h4> <br />
                   <p>
-                    The basin holds an outsized share of Australia’s copper
-                    (≈68%). Even with a small land area fraction, this
-                    concentration strongly impacts national mining output and
-                    local economies.
+                    I wanted to find the area of the basin to see how big of a
+                    deal the holding 68% of Australia’s copper really was, but{" "}
+                    <i>literally no source</i> states the area, so here’s the
+                    crudest approximation ever:
+                  </p>
+                  <p>
+                    {" "}
+                    <br />
+                    North-South Length = ~850km <br />
+                    East-West<sub>low</sub> = ~118km <br />
+                    East-West<sub>high</sub> = ~353km <br />
+                    <br />
+                    Area<sub>low</sub> = ~100,300km<sup>2</sup> <br />
+                    Area<sub>high</sub> = ~300,050km<sup>2</sup>
+                  </p>{" "}
+                  <br />
+                  <p>
+                    The area of Australia is 7,688,287km<sup>2</sup>, so even
+                    with us taking the higher estimate, even though the basin
+                    only carries ~3.9% of Australia’s land area, it carries 68%
+                    of its copper supply.
+                  </p>{" "}
+                  <br />
+                  <p>
+                    And Australia is the 8<sup>th</sup> biggest copper supplier
+                    in the world, and copper is around 25% of its entire mining
+                    sector (which itself is around 13.6% of its GDP).
                   </p>
                 </div>
               )}
+
               {leftDetail === "rnd" && (
                 <div>
-                  <h4>Research &amp; Development</h4>
+                  <h4>Research &amp; Development</h4> <br />
                   <p>
-                    University and ARC-funded projects (e.g., University of
-                    Adelaide) support geological mapping and mineral discovery,
-                    training researchers and reducing exploration risk.
+                    <a
+                      href="https://www.adelaide.edu.au/newsroom/news/list/2022/04/14/superbasin-project-unearths-geological-history"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      The University of Adelaide’s Superbasin project
+                    </a>{" "}
+                    received a 400,000 AUD ARC (Australian Research Council)
+                    grant over 3 years to study the Adelaide Superbasin.
+                  </p>
+                  <p>
+                    {" "}
+                    <br />
+                    This isn’t just theoretical — the research contributes to
+                    discovering economically valuable minerals like copper,
+                    lead, and silver. Exploration companies use these findings
+                    to decide where to drill, reducing wasted investment and
+                    risk.
+                  </p>
+                  <p>
+                    {" "}
+                    <br />
+                    It also means we train smarter, more hands-on students —
+                    graduate students, postdocs, and early-career researchers
+                    get real-world experience in mining geology.
                   </p>
                 </div>
               )}
+
               {leftDetail === "jobs" && (
                 <div>
-                  <h4>Jobs</h4>
+                  <h4>Jobs</h4> <br />
                   <p>
-                    Mining supply chains create local employment – from drilling
-                    crews to transport and services.
+                    <iframe
+                      className="rounded-2xl"
+                      width="560"
+                      height="315"
+                      src="https://www.youtube.com/embed/8fcSviC7cRM?start=27"
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </p>
+                  <p>
+                    {" "}
+                    <br />
+                    Every truck moving ore, every drill bit made, every meal
+                    served at a mining camp translates to local jobs. And in
+                    this economy, people would take that.
                   </p>
                 </div>
               )}
@@ -189,7 +241,7 @@ export default function Home() {
             <div className="top-tiles">
               <motion.button
                 type="button"
-                className="summary"
+                className="summary red"
                 onClick={() => setRightDetail("unusable")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -198,7 +250,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 type="button"
-                className="summary"
+                className="summary maroon"
                 onClick={() => setRightDetail("floods")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -207,7 +259,7 @@ export default function Home() {
               </motion.button>
               <motion.button
                 type="button"
-                className="summary"
+                className="summary lavender"
                 onClick={() => setRightDetail("opportunity")}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -217,38 +269,63 @@ export default function Home() {
             </div>
             <div className="bottom-tile">
               {rightDetail === null && (
-                <p className="muted">
-                  Click a tile above to see more. (click fullscreen to open
-                  fullscreen)
-                </p>
+                <p className="muted">Click a tile above to see more.</p>
               )}
+
               {rightDetail === "unusable" && (
                 <div>
-                  <h4>Unusable land</h4>
+                  <h4>Unusable land</h4> <br />
                   <p>
-                    Thick sedimentary sequences make some areas difficult for
-                    agriculture or heavy construction. Examples include the
-                    Stuart Shelf with very thick soft sediments.
+                    The Superbasin covers huge swaths of land. Its ancient rock
+                    formations and sedimentary layers make some areas poor for
+                    agriculture, construction, or urban development. That’s land
+                    that could’ve been used more productively otherwise.
+                  </p>{" "}
+                  <br />
+                  <p>
+                    For example, the Stuart Shelf has insanely thick sedimentary
+                    layers (soft rocks above the crust), up to 500m (the usual
+                    elsewhere is around 100–200m), which makes it much harder to
+                    build taller and heavier buildings — especially in an
+                    earthquake-prone zone.
+                  </p>
+                  <p>
+                    {" "}
+                    <br />
+                    To be fair, the sedimentary layer height near Avadi is
+                    around 2.4km, but that area isn’t earthquake-prone and we
+                    don’t build tall structures there. It’s about 150m near T.
+                    Nagar.
                   </p>
                 </div>
               )}
+
               {rightDetail === "floods" && (
                 <div>
-                  <h4>Flooding &amp; subsidence</h4>
+                  <h4>Flooding &amp; subsidence</h4> <br />
                   <p>
-                    Basins can have poor groundwater drainage and be prone to
-                    subsidence. The Gawler River has a recorded history of
-                    floods influenced by local geology.
-                  </p>
+                    Basins trap groundwater poorly and are prone to subsidence
+                    if natural fractures exist. Even without mining, that limits
+                    infrastructure development.
+                  </p>{" "}
+                  <br />
+                  <p>
+                    The Gawler River, for instance, has flooded multiple times —
+                    in 1992, 2005, and 2016 — due to the geology there (soil
+                    types, slopes from hills, and alluvial plains).
+                  </p>{" "}
+                  <br />
                 </div>
               )}
+
               {rightDetail === "opportunity" && (
                 <div>
-                  <h4>Opportunity cost</h4>
+                  <h4>Opportunity cost in diversification</h4> <br />
                   <p>
-                    Focusing the area on mining limits alternative uses like
-                    tourism or agriculture — choices that have uncertain
-                    comparative returns.
+                    By focusing this region mostly on mineral mining, we give up
+                    opportunities in tourism, agriculture, or other sectors.
+                    Those might have produced more — or less — income, but
+                    without trying, we’ll never know.
                   </p>
                 </div>
               )}

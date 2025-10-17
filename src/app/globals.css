@@ -1,299 +1,289 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --accent: #0b66d0;
-  --accent-foreground: #ffffff;
-  --card-background: #f5f7ff;
-  --card-foreground: #0b1a2b;
-  --muted-foreground: #61708a;
-}
-
-/* theme variables are set in layout font imports */
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --accent: #2589f5;
-    --accent-foreground: #ffffff;
-    --card-background: #1a1a1a;
-    --card-foreground: #ededed;
-    --muted-foreground: #a1a1aa;
+    --background: #1e1e2e;
+    --foreground: #cdd6f4;
+    --card: #313244;
+    --card-foreground: #cdd6f4;
+    --popover: #313244;
+    --popover-foreground: #cdd6f4;
+    --primary: #cba6f7;
+    --primary-foreground: #11111b;
+    --secondary: #45475a;
+    --secondary-foreground: #cdd6f4;
+    --muted: #313244;
+    --muted-foreground: #a6adc8;
+    --accent: #f5c2e7;
+    --accent-foreground: #11111b;
+    --destructive: #f38ba8;
+    --destructive-foreground: #11111b;
+    --border: #45475a;
+    --input: #45475a;
+    --ring: #cba6f7;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: #1e1e2e;
+    --foreground: #cdd6f4;
+    --card: #313244;
+    --card-foreground: #cdd6f4;
+    --popover: #313244;
+    --popover-foreground: #cdd6f4;
+    --primary: #cba6f7;
+    --primary-foreground: #11111b;
+    --secondary: #45475a;
+    --secondary-foreground: #cdd6f4;
+    --muted: #313244;
+    --muted-foreground: #a6adc8;
+    --accent: #f5c2e7;
+    --accent-foreground: #11111b;
+    --destructive: #f38ba8;
+    --destructive-foreground: #11111b;
+    --border: #45475a;
+    --input: #45475a;
+    --ring: #cba6f7;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-/* Slides styles for Adelaide Superbasin content */
+/* Custom styles */
 .slides-root {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  padding: 0; /* vertical padding, allow full bleed */
-  width: 100vw;
-  box-sizing: border-box;
+  @apply flex flex-col gap-0 p-0 w-screen box-border;
 }
 .slide {
-  display: flex;
-  gap: 24px;
-  align-items: stretch;
-  /* min-height: 100vh; */ /* fill full viewport */
-  width: 100%;
+  @apply flex gap-6 items-stretch w-full;
 }
 .slide-1-left {
-  flex: 1 1 50%;
-  position: relative;
-  /* min-height: 100vh; */
-  max-width: 50%;
-  overflow: visible; /* allow image to bleed */
+  @apply flex-1 basis-1/2 relative max-w-1/2 overflow-visible;
 }
 .image-wrap {
-  position: relative;
-  width: 100%;
-  height: 70vh;
-  left: 0;
-  overflow: visible;
+  @apply relative w-full h-[70vh] left-0 overflow-visible;
 }
 .slide-image {
-  object-fit: cover;
-  filter: saturate(0.98);
-  position: absolute;
-  inset: 0;
+  @apply object-cover saturate-[.98] absolute inset-0;
 }
-/* Side fades: fade edges toward the middle (edge -> transparent center) */
 .image-wrap::before,
 .image-wrap::after {
   content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 20%;
-  pointer-events: none;
+  @apply absolute top-0 bottom-0 w-1/5 pointer-events-none;
 }
 .image-wrap::before {
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    var(--background) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  @apply left-0 bg-gradient-to-r from-background to-transparent;
 }
 .image-wrap::after {
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    var(--background) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
-}
-/* horizontal fade element handles edge -> middle fade already; vertical will be added via markup */
-.image-fade.horizontal {
-  display: none;
+  @apply right-0 bg-gradient-to-l from-background to-transparent;
 }
 .image-fade.vertical {
-  display: none;
+  @apply absolute left-0 right-0 h-2/5 bottom-0 bg-gradient-to-t from-background to-transparent pointer-events-none z-10;
 }
 .slide-1-right {
-  flex: 1 1 50%;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 28px;
-  justify-content: flex-start;
-  position: relative;
-  z-index: 20;
+  @apply flex-1 basis-1/2 flex flex-col gap-4 p-7 justify-start relative z-20;
+}
+h1,
+h2,
+h3,
+h4 {
+  @apply text-pink;
 }
 .slide-1-right h1 {
-  font-size: 36px;
-  margin: 0 0 8px 0;
-  color: var(--accent);
+  @apply text-4xl m-0 mb-2 text-center;
   text-shadow: 0 2px 8px rgba(11, 102, 208, 0.08);
-  text-align: center;
 }
 .slide-1-right {
-  color: var(--foreground);
+  @apply text-foreground;
 }
 .tiles {
-  display: flex;
-  gap: 12px;
-  flex-direction: column;
+  @apply flex flex-col gap-3;
 }
 .tile {
-  background: var(--card-background);
-  border-radius: 10px;
-  padding: 14px;
-  box-shadow: 0 10px 30px rgba(12, 12, 12, 0.06);
-  border: 1px solid rgba(11, 102, 208, 0.06);
-  color: var(--card-foreground);
+  @apply bg-card text-card-foreground rounded-lg p-3.5 shadow-lg border border-surface1;
 }
 .tile strong {
-  display: block;
-  font-size: 16px;
-  color: var(--accent);
+  @apply block text-base text-accent;
 }
 .map-box {
-  margin-top: 12px;
+  @apply mt-3;
 }
 .map-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @apply flex justify-between items-center;
 }
 .linkish {
-  background: none;
-  border: none;
-  color: var(--accent);
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 6px;
-  font-weight: 600;
+  @apply bg-none border-none text-accent cursor-pointer underline p-1.5 font-semibold;
 }
 .map-embed {
-  margin-top: 8px;
-  height: 240px;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  @apply mt-2 h-60 rounded-md overflow-hidden shadow-lg;
 }
 .map-iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
+  @apply w-full h-full border-0;
 }
 .caption {
-  display: block;
-  color: var(--muted-foreground);
-  margin-top: 6px;
+  @apply block text-muted-foreground mt-1.5;
 }
-
 .slide-2 {
-  flex-direction: column;
-  padding: 24px;
-  box-sizing: border-box;
+  @apply flex-col p-6 box-border;
 }
 .slide-2 h2 {
-  font-size: 28px;
+  @apply text-3xl;
 }
 .animation-placeholder {
-  min-height: 260px;
-  border-radius: 10px;
-  border: 1px dashed rgba(11, 102, 208, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--card-background);
-  box-shadow: 0 8px 28px rgba(11, 102, 208, 0.04);
-  color: var(--accent);
-  font-weight: 600;
-  text-align: center;
+  @apply min-h-[260px] rounded-lg border border-dashed border-surface2 flex items-center justify-center bg-card shadow-lg text-accent font-semibold text-center;
 }
-
 .slide-3 {
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  box-sizing: border-box;
+  @apply items-center justify-center p-6 box-border;
 }
 .slide-3 .split {
-  display: flex;
-  gap: 24px;
-  align-items: stretch;
-  justify-content: center;
-  width: 100%;
-  flex-grow: 1;
+  @apply flex gap-6 items-stretch justify-center w-full flex-grow;
 }
 .column {
-  flex: 1 1 50%;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  padding: 24px;
-  box-sizing: border-box;
+  @apply flex-1 basis-1/2 bg-transparent flex flex-col items-stretch p-6 box-border;
+}
+.column h3 {
+  @apply text-2xl text-center mb-3;
 }
 .top-tiles {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
+  @apply flex gap-3 mb-3;
 }
 .summary {
-  flex: 1;
-  padding: 14px 18px;
-  border-radius: 10px;
-  border: 0;
-  background: var(--accent);
-  color: var(--accent-foreground);
-  box-shadow: 0 10px 24px rgba(6, 44, 102, 0.16);
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 700;
-  transition:
-    transform 0.18s ease,
-    box-shadow 0.18s ease;
+  @apply flex-1 p-3.5 rounded-lg border-0 text-primary-foreground shadow-lg cursor-pointer text-base font-bold transition-transform transition-shadow ease-in-out;
 }
 .summary:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 36px rgba(6, 44, 102, 0.22);
+  @apply -translate-y-1.5 shadow-2xl;
+}
+.summary.rosewater {
+  @apply bg-rosewater;
+}
+.summary.flamingo {
+  @apply bg-flamingo;
+}
+.summary.pink {
+  @apply bg-pink;
+}
+.summary.mauve {
+  @apply bg-mauve;
+}
+.summary.red {
+  @apply bg-red;
+}
+.summary.maroon {
+  @apply bg-maroon;
+}
+.summary.peach {
+  @apply bg-peach;
+}
+.summary.yellow {
+  @apply bg-yellow;
+}
+.summary.green {
+  @apply bg-green;
+}
+.summary.teal {
+  @apply bg-teal;
+}
+.summary.sky {
+  @apply bg-sky;
+}
+.summary.sapphire {
+  @apply bg-sapphire;
+}
+.summary.blue {
+  @apply bg-blue;
+}
+.summary.lavender {
+  @apply bg-lavender;
 }
 .bottom-tile {
-  flex-grow: 1;
-  padding: 18px;
-  border-radius: 10px;
-  background: var(--card-background);
-  box-shadow: 0 12px 26px rgba(6, 44, 102, 0.04);
-  border: 1px solid rgba(11, 102, 208, 0.04);
-  display: flex;
-  flex-direction: column;
+  @apply flex-grow p-4 rounded-lg bg-card shadow-lg border border-surface1 flex flex-col;
 }
 .muted {
-  color: var(--muted-foreground);
+  @apply text-muted-foreground;
 }
-
-/* Ensure the image fades vertically from top/bottom to the middle */
-.image-fade.vertical {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 40%;
-  bottom: 0;
-  background: linear-gradient(
-    to top,
-    var(--background) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Make sure right column content sits above image bleed */
 .slide-1-right,
 .tiles,
 .map-box {
-  position: relative;
-  z-index: 20;
+  @apply relative z-20;
 }
-
 @media (max-width: 900px) {
   .slide {
-    flex-direction: column;
+    @apply flex-col;
   }
   .slide-1-left {
     min-height: 50vh;
-    max-width: 100%;
+    @apply max-w-full;
   }
   .image-wrap {
-    width: 100%;
-    left: 0;
-    height: 60vh;
+    @apply w-full left-0 h-[60vh];
   }
   .image-wrap::before,
   .image-wrap::after {
-    display: none;
+    @apply hidden;
   }
+}
+.rift-valley-animation-container {
+  @apply flex flex-col gap-4 items-center w-full;
+}
+.rift-valley-svg {
+  @apply w-full max-w-3xl h-auto rounded-lg bg-surface0;
+}
+.animation-controls {
+  @apply flex flex-col items-center gap-3 text-center;
+}
+.animation-step-caption {
+  @apply text-base text-muted-foreground min-h-[40px];
+}
+.next-button {
+  @apply bg-primary text-primary-foreground border-none py-3 px-6 rounded-lg text-base font-semibold cursor-pointer transition-colors hover:opacity-90;
+}
+.next-button.rosewater {
+  @apply bg-rosewater;
+}
+.next-button.flamingo {
+  @apply bg-flamingo;
+}
+.next-button.pink {
+  @apply bg-pink;
+}
+.next-button.mauve {
+  @apply bg-mauve;
+}
+.next-button.red {
+  @apply bg-red;
+}
+.next-button.maroon {
+  @apply bg-maroon;
+}
+.next-button.peach {
+  @apply bg-peach;
+}
+.next-button.yellow {
+  @apply bg-yellow;
+}
+.next-button.green {
+  @apply bg-green;
+}
+.next-button.teal {
+  @apply bg-teal;
+}
+.next-button.sky {
+  @apply bg-sky;
+}
+.next-button.sapphire {
+  @apply bg-sapphire;
+}
+.next-button.blue {
+  @apply bg-blue;
+}
+.next-button.lavender {
+  @apply bg-lavender;
+}
+.preface {
+  @apply max-w-4xl my-4 mx-auto text-center text-lg leading-relaxed;
 }
