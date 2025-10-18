@@ -211,7 +211,7 @@ export default function Home() {
 
               {leftDetail === "jobs" && (
                 <div>
-                  <h4>Jobs</h4> <br />
+                  <h4>JOBS JOBS JOBS</h4> <br />
                   <p>
                     <iframe
                       className="rounded-2xl"
